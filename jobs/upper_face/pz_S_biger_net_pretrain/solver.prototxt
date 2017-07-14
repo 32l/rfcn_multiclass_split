@@ -1,0 +1,15 @@
+train_net: "train.prototxt"
+base_lr: 0.001
+display: 20
+max_iter: 7255500
+lr_policy: "step"
+gamma: 0.5
+momentum: 0.9
+weight_decay: 0.0005
+stepsize: 870660
+snapshot: 5000
+snapshot_prefix: "models_solverstates/"
+snapshot_after_train: true
+average_loss: 10
+iter_size: 1
+type: "SGD"

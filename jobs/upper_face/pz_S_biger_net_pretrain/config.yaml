@@ -1,0 +1,73 @@
+TRAIN:
+    SCALE: 104
+    UNNORMALIZED_SNAPSHOT_ITERS: 5000
+    IMS_PER_BATCH: 4
+
+    DATA_AUG:
+        MEAN_POLICY: CONST
+        NORMALIZER: 255.0
+        CROP_RATIO_MIN_BOUND: 0.8
+        MIN_SIZE: 5
+
+    #get raw proposal
+    RPN_NMS_THRESH: 0.7
+    RPN_PRE_NMS_TOP_N: 1500
+    RPN_POST_NMS_TOP_N: 200
+    #get rpn_loss
+    RPN_POSITIVE_OVERLAP: 0.5
+    RPN_NEGATIVE_OVERLAP: 0.3
+    RPN_FG_FRACTION: 0.4
+    RPN_BATCHSIZE: 256
+
+    #proposal sampled
+    FG_FRACTION: 0.25
+    #fg overlap thresh
+    FG_THRESH: 0.6
+    BG_THRESH_HI: 0.4
+    BG_THRESH_LO: 0.0
+    BATCH_SIZE: -1
+    ROI_PER_IMG: 256
+
+TEST:
+    SCALE: 104
+    NMS: 0.4
+    RPN_NMS_THRESH: 0.7
+    RPN_PRE_NMS_TOP_N: 1000
+    RPN_POST_NMS_TOP_N: 100
+    THRESH: 0.01
+
+DEBUG:
+    RPN_ANCHOR_TARGET_SHOW: False
+    RPN_ANCHOR_TARGET_NEG_SHOW: False
+    RPN_PROPOSAL_SHOW: False
+    RPN_PROPOSAL_CHOSEN_SHOW: False
+    RPN_PROPOSAL_NEG_CHOSEN_SHOW: False
+
+
+ANCHOR_GENERATOR:
+    person_upper:
+        POLICY: SCALE_RATIO
+        SCALES: [15, 25, 35, 45, 60, 85]
+        #r=h/w
+        RATIOS: [1, 1.5]
+        # SLIDING_WINDOW_WIDTH:  [10, 15, 20, 20, 30, 30, 40]
+        # SLIDING_WINDOW_HEIGHT: [15, 20, 30, 40, 45, 60, 60]
+    person_face:
+        POLICY: SCALE_RATIO
+        SCALES: [10, 15, 20, 30, 40]
+        #r=h/w
+        RATIOS: [1, 1.5]
+        # SLIDING_WINDOW_WIDTH:  [10, 15, 20, 20, 30, 30, 40]
+        # SLIDING_WINDOW_HEIGHT: [15, 20, 30, 40, 45, 60, 60]
+
+MULTICLASS_SPLIT: true
+NUM_CLASSES: 3
+CLASSES: ['__background__', 'person_upper', 'person_face']
+FEAT_STRIDE: 8
+POSITION_NUM: 3
+
+SOLVER:
+    base_lr: 0.001
+    max_epoch: 1000
+    step_epoch: 120
+    snapshot: 5000
